@@ -1,6 +1,7 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const { Notification } = require('electron');
+const { ipcMain, nativeTheme } = require('electron');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -11,14 +12,27 @@ const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 800,
-    height: 600
+    height: 600,
+    webPreferences: {
+      nodeIntegration: true
+    }
   });
 
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  ipcMain.handle('dark-mode:toggle', () => {
+    if (nativeTheme.shouldUseDarkColors) {
+      nativeTheme.themeSource = 'light'
+    } else {
+      nativeTheme.themeSource = 'dark'
+    }
+    return nativeTheme.shouldUseDarkColors
+  })
+
+  ipcMain.handle('dark-mode:system', () => {
+    nativeTheme.themeSouce = 'system'
+  })
 };
 
 // This method will be called when Electron has finished
