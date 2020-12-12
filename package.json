@@ -1,0 +1,19 @@
+{
+  "name": "hello-electron",
+  "version": "0.1.0",
+  "description": "Getting started with electronjs",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "helloworld",
+    "electron"
+  ],
+  "author": "miquifant",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "electron": "^11.0.4"
+  }
+}
