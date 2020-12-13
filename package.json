@@ -12,6 +12,10 @@
     "lint": "echo \"No linting configured\"",
     "test": "echo \"No test specified\""
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miquifant/hello-electron.git"
+  },
   "keywords": [
     "helloworld",
     "electron"
@@ -21,6 +25,10 @@
     "email": "miqui.infante@gmail.com"
   },
   "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/miquifant/hello-electron/issues"
+  },
+  "homepage": "https://github.com/miquifant/hello-electron#readme",
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0"
   },

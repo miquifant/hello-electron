@@ -3,6 +3,7 @@
 ## Based on
 
 [Electron-Forge Getting Started](https://www.electronforge.io/#the-basics)
+[electron in action](https://github.com/electron-in-action/firesale/blob/chapter-7/app/main.js)
 
 ## Execution
 
