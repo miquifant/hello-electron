@@ -2,9 +2,10 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
-    <link rel="stylesheet" href="index.css">
+    <title>Hello World!</title>
+    <link rel="stylesheet" href="index.css" type="text/css">
   </head>
   <body>
     <h1>💖 Hello World!</h1>
@@ -15,6 +16,11 @@
     <div>
       <button id="toggle-dark-mode">Toggle Dark Mode</button>
       <button id="reset-to-system">Reset to System Theme</button>
+    </div>
+    <p></p>
+    <div>
+      <button id="debug_console">Debug cmdline</button>
+      <button id="debug_devtools">Debug devtools</button>
     </div>
     <script src="renderer.js"></script>
   </body>

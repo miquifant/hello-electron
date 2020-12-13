@@ -1,7 +1,8 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, dialog, ipcMain, Menu, nativeTheme, Notification } = require('electron');
 const path = require('path');
-const { Notification } = require('electron');
-const { ipcMain, nativeTheme } = require('electron');
+const fs = require('fs');
+const shell = require('electron').shell
+const appMenu = require("./app-menu");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -21,6 +22,8 @@ const createWindow = () => {
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
+  Menu.setApplicationMenu(appMenu);
+
   ipcMain.handle('dark-mode:toggle', () => {
     if (nativeTheme.shouldUseDarkColors) {
       nativeTheme.themeSource = 'light'
@@ -32,6 +35,10 @@ const createWindow = () => {
 
   ipcMain.handle('dark-mode:system', () => {
     nativeTheme.themeSouce = 'system'
+  })
+
+  ipcMain.handle('debugConsole', () => {
+    console.log("debug in the cmdline console");
   })
 };
 
@@ -67,3 +74,23 @@ function showNotification () {
   new Notification(notification).show()
 }
 app.whenReady().then(showNotification)
+
+const getFileFromUser = exports.getFileFromUser = (targetWindow) => {
+  const files = dialog.showOpenDialog(targetWindow, {
+    properties: ['openFile'],
+    filters: [
+      { name: 'Text Files', extensions: ['txt'] },
+      { name: 'Markdown Files', extensions: ['md', 'markdown'] }
+    ]
+  });
+  console.log("files: " + files);
+  if (files) { openFile(targetWindow, files[0]); }
+};
+
+const openFile = exports.openFile = (targetWindow, file) => {
+  const content = fs.readFileSync(file).toString();
+  app.addRecentDocument(file);
+  targetWindow.setRepresentedFilename(file);
+  targetWindow.webContents.send('file-opened', file, content);
+  startWatchingFile(targetWindow, file);
+};

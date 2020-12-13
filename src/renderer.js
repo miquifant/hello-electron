@@ -1,5 +1,8 @@
 const { ipcRenderer } = require('electron')
 
+const debugConsoleButton = document.querySelector('#debug_console');
+const debugDevtoolsButton = document.querySelector('#debug_devtools');
+
 const myNotification = new Notification('Miqui says', {
   body: 'Hi! This is a notification from the Renderer process'
 })
@@ -26,3 +29,10 @@ document.getElementById('reset-to-system').addEventListener('click', async () =>
   await ipcRenderer.invoke('dark-mode:system')
   document.getElementById('theme-source').innerHTML = 'System'
 })
+  
+debugConsoleButton.addEventListener('click', async () => {
+  await ipcRenderer.invoke('debugConsole')
+})
+debugDevtoolsButton.addEventListener('click', () => {
+  console.log("debug in the devTools console");
+});
